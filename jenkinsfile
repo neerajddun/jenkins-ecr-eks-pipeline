@@ -96,7 +96,10 @@ pipeline {
 
             steps {
 
-                sh "docker build -t $IMAGE_NAME:$IMAGE_TAG . "
+                sh '''
+                docker build -t $IMAGE_NAME:$IMAGE_TAG .
+
+                '''
             }
         }
 
@@ -104,7 +107,7 @@ pipeline {
 
             steps {
 
-                 sh 'trivy image --format table -o trivy-image-report.html $IMAGE'
+                 sh 'trivy image --format table -o trivy-image-report.html $IMAGE_NAME:$IMAGE_TAG'
             }
         }
 
