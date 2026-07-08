@@ -9,6 +9,7 @@ pipeline {
         AWS_REGION = "ap-southeast-1"
         ECR_REGISTRY = "883999921903.dkr.ecr.ap-southeast-1.amazonaws.com"
         KUBECONFIG  = "/var/jenkins_home/.kube/config"
+        EKS_CLUSTER = "test-cluster"
     }   
 
     stages {
