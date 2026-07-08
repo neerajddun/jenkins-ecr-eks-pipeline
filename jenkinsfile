@@ -52,13 +52,16 @@ pipeline {
 
                 withCredentials([string(credentialsId: 'nvd-api-key', variable: 'NVD_KEY')])
                  {
-                 
-                    dependencyCheck(
-                    additionalArguments: "--scan ./ --format HTML --format XML --nvdApiKey $NVD_KEY",
-                    odcInstallation: 'DP-Check'
-
-                    )
-
+                 dependencyCheck(
+                  additionalArguments: """
+                  --scan . \
+                  --format HTML \
+                  --format XML \
+                  --noupdate \
+                  --nvdApiKey ${NVD_KEY}
+                   """,
+                  podcInstallation: 'DP-Check'
+                   )
                 }
 
             }

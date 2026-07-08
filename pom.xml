@@ -22,7 +22,7 @@
         <java.version>17</java.version>
         <sonar.projectKey>jenkins-ecr-eks</sonar.projectKey>
         <sonar.projectName>jenkins-ecr-eks</sonar.projectName>
-        <!-- Tell SonarQube exactly where JaCoCo XML report is -->
+        <!-- Tell SonarQube exactly where pJaCoCo XML report is -->
         <sonar.coverage.jacoco.xmlReportPaths>
             ${project.basedir}/target/site/jacoco/jacoco.xml
         </sonar.coverage.jacoco.xmlReportPaths>
