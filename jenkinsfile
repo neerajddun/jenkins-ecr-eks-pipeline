@@ -4,7 +4,7 @@ pipeline {
 
     environment {
 
-        IMAGE = 'neeraj91\${JOB_NAME}:v1.${BUILD_NUMBER}'
+        IMAGE = "neeraj91/${JOB_NAME}:v1.${BUILD_NUMBER}"
     } 
 
     stages {
