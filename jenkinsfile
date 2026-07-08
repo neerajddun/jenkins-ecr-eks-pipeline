@@ -39,11 +39,36 @@ pipeline {
             }
         }
 
+        stage ('Trivy FS scan') {
+            
+            steps {
+                sh 'trivy fs --format table -o trivy-fs-report.html .'
+            }
+        }
+        
+        stage ('OWASP scan') {
+
+            steps {
+
+                dependencyCheck additionalArguments: '--scan ./ --format HTML --format XML', odcInstallation: 'DP-Check'
+        dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
+            }
+        }
+        
+
         stage ('Docker Image Build and tag') {
 
             steps {
 
                 sh ' docker build -t $IMAGE . '
+            }
+        }
+
+        stage ('Trivy Image Scan') {
+
+            steps {
+
+                 sh 'trivy image --format table -o trivy-image-report.html $IMAGE'
             }
         }
 
