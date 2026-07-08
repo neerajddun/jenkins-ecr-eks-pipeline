@@ -8,7 +8,8 @@ pipeline {
         IMAGE_TAG ="v1.${BUILD_NUMBER}"
         AWS_REGION = "ap-southeast-1"
         ECR_REGISTRY = "883999921903.dkr.ecr.ap-southeast-1.amazonaws.com"
-    } 
+        KUBECONFIG  = "/var/jenkins_home/.kube/config"
+    }   
 
     stages {
 
@@ -128,6 +129,18 @@ pipeline {
                   docker push $ECR_REGISTRY/$IMAGE_NAME:latest
                  
                   '''
+            }
+        }
+
+        stage('Deploy to EKS') {
+            steps {
+                withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'aws-creds']]) {
+                    sh """
+                        aws eks update-kubeconfig --region ${AWS_REGION} --name ${EKS_CLUSTER} --kubeconfig ${KUBECONFIG}
+                        kubectl apply -f deployment.yaml
+                        kubectl apply -f service.yaml 
+                    """
+                }
             }
         }
     }

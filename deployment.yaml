@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
         - name: java-app
-          image: neeraj91/java-app:latest
+          image: 883999921903.dkr.ecr.ap-southeast-1.amazonaws.com/my-repo:latest
           ports:
             - containerPort: 9090
           resources:
