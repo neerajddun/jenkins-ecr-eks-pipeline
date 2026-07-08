@@ -2,7 +2,7 @@ pipeline {
     
     agent any
 
-    enviornment {
+    environment {
 
         IMAGE = 'neeraj91\${JOB_NAME}:v1.${BUILD_NUMBER}'
     } 
@@ -55,7 +55,7 @@ pipeline {
                  
                 sh 'echo $DOCKERPASS | docker login -u $DOCKERNAME --password-stdin'
                 sh 'docker push $IMAGE'
-                
+
                 }
             }
         }
