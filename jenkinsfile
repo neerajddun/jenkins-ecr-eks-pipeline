@@ -60,7 +60,7 @@ pipeline {
                   --noupdate \
                   --nvdApiKey ${NVD_KEY}
                    """,
-                  podcInstallation: 'DP-Check'
+                   odcInstallation: 'DP-Check'
                    )
                 }
 
