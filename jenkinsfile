@@ -5,6 +5,8 @@ pipeline {
     environment {
 
         IMAGE = "neeraj91/${JOB_NAME}:v1.${BUILD_NUMBER}"
+        AWS_REGION = "ap-southeast-1"
+        ECR_REGISTRY = "883999921903.dkr.ecr.ap-southeast-1.amazonaws.com"
     } 
 
     stages {
@@ -112,11 +114,7 @@ pipeline {
                sh '''
                   aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $ECR_REGISTRY
 
-                  docker tag $IMAGE_NAME:$IMAGE_TAG $ECR_REGISTRY/$IMAGE_NAME:$IMAGE_TAG
-                  docker tag $IMAGE_NAME:$IMAGE_TAG $ECR_REGISTRY/$IMAGE_NAME:latest
- 
-                  docker push $ECR_REGISTRY/$IMAGE_NAME:$IMAGE_TAG
-                  docker push $ECR_REGISTRY/$IMAGE_NAME:latest 
+                  docker push $ECR_REGISTRY/$IMAGE
                  
                  '''
             }
