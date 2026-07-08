@@ -4,7 +4,8 @@ pipeline {
 
     environment {
 
-        IMAGE = "neeraj91/${JOB_NAME}:v1.${BUILD_NUMBER}"
+        IMAGE_NAME= "my-repo"
+        IMAGE_TAG ="v1.${BUILD_NUMBER}"
         AWS_REGION = "ap-southeast-1"
         ECR_REGISTRY = "883999921903.dkr.ecr.ap-southeast-1.amazonaws.com"
     } 
@@ -95,7 +96,7 @@ pipeline {
 
             steps {
 
-                sh ' docker build -t $IMAGE . '
+                sh "docker build -t $IMAGE_NAME:$IMAGE_TAG . "
             }
         }
 
@@ -107,16 +108,23 @@ pipeline {
             }
         }
 
-        stage ('Docker Push') {
+        stage ('Push To ECR') {
 
             steps {
 
                sh '''
                   aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $ECR_REGISTRY
 
-                  docker push $ECR_REGISTRY/$IMAGE
+                  docker tag $IMAGE_NAME:$IMAGE_TAG \
+                  $ECR_REGISTRY/$IMAGE_NAME:$IMAGE_TAG
+
+                  docker tag $IMAGE_NAME:$IMAGE_TAG \
+                  $ECR_REGISTRY/$IMAGE_NAME:latest
+
+                  docker push $ECR_REGISTRY/$IMAGE_NAME:$IMAGE_TAG
+                  docker push $ECR_REGISTRY/$IMAGE_NAME:latest
                  
-                 '''
+                  '''
             }
         }
     }
