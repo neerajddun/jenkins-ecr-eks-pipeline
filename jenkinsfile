@@ -50,7 +50,7 @@ pipeline {
 
             steps {
 
-                 dependencyCheck additionalArguments: "--scan ./ --format HTML --format XML --nvdApiKey ${f6c49637-c3e3-43e4-98c6-80fd2051ebf3}", odcInstallation: 'DP-Check'
+                 dependencyCheck additionalArguments: "--scan ./ --format HTML --format XML --nvdApiKey ${NVD_KEY}", odcInstallation: 'DP-Check'
 
                   dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
 
